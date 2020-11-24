@@ -37,8 +37,8 @@ function spawn(config, args, cb) {
     }).join(' ');
     cmd = [cmd, cmdArgs].join(' ');
   }
-
-  var proc = child_process.spawn('sh', ['-c', cmd], { stdio: 'inherit' });
+  cmd = cmd.split(' ');
+  var proc = child_process.spawn('echo', cmd.slice(1), { stdio: 'inherit' });
   var error;
 
   proc.on('error', function (err) {
