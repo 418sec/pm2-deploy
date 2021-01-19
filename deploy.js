@@ -28,7 +28,7 @@ var schema = {
  * @param {DeployCallback} cb done callback
  */
 function spawn(config, args, cb) {
-  var cmd = format('echo \'%j\' | "%s"', config, require.resolve('./deploy'));
+  var cmd = format('-c echo \'%j\' | "%s"', config, require.resolve('./deploy'));
 
   args = args || [];
   if (args.length > 0) {
@@ -37,8 +37,8 @@ function spawn(config, args, cb) {
     }).join(' ');
     cmd = [cmd, cmdArgs].join(' ');
   }
-
-  var proc = child_process.spawn('sh', ['-c', cmd], { stdio: 'inherit' });
+  cmd = cmd.split(' ');
+  var proc = child_process.spawn('sh', cmd, { stdio: 'inherit' });
   var error;
 
   proc.on('error', function (err) {
